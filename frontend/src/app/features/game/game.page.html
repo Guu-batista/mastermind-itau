@@ -1,0 +1,76 @@
+<section class="head">
+  <div>
+    <h1>Partida</h1>
+    <p>Acerte a sequencia para pontuar!</p>
+  </div>
+  <div class="actions">
+    <button class="btn ghost" (click)="newGame()" [disabled]="loading()">Nova partida</button>
+  </div>
+</section>
+
+@if (error()) {
+  <div class="alert">{{ error() }}</div>
+}
+
+@if (showModal()) {
+  <div class="overlay" (click)="showModal.set(false)">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>{{ status() === 'WON' ? 'Oba! Você venceu!' : 'Fim de jogo' }}</h2>
+      <p class="modal-score">{{ score() }}</p>
+      <p class="modal-label">pontos</p>
+      <button class="btn" (click)="showModal.set(false)">Fechar</button>
+    </div>
+  </div>
+}
+
+@if (!gameCode()) {
+  <div class="empty">
+    <p>Clique em <strong>Nova partida</strong> para começar.</p>
+  </div>
+} @else {
+  <div class="meta">
+    <div><strong>Código:</strong> {{ gameCode() }}</div>
+    <div><strong>Status:</strong> {{ status() }}</div>
+    <div><strong>Score:</strong> {{ score() }}</div>
+  </div>
+
+  <div class="board">
+    @for (row of attempts(); track $index; let rowIndex = $index) {
+      <div class="row">
+        <div class="cells">
+          @for (c of row.guess; track $index; let colIndex = $index) {
+            <select
+              class="cell"
+              [class.correct]="row.submitted && !!row.correct_mask?.[colIndex]"
+              [disabled]="rowIndex !== currentIndex() || row.submitted || isFinished()"
+              [value]="row.guess[colIndex]"
+              (change)="setCell(rowIndex, colIndex, $any($event.target).value)"
+            >
+              @for (opt of alphabet(); track opt) {
+                <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+          }
+        </div>
+        <div class="feedback">
+          @if (row.correct_positions === null) {
+            <span class="dash">—</span>
+          } @else {
+            <span class="pill">{{ row.correct_positions }}</span>
+          }
+        </div>
+        <div class="cta">
+          @if ($index === currentIndex()) {
+            <button
+              class="btn"
+              (click)="submit()"
+              [disabled]="loading() || row.submitted || isFinished()"
+            >
+              {{ loading() ? 'Enviando…' : 'Enviar' }}
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,21 @@
+<div class="layout">
+  <header class="topbar">
+    <a class="brand" routerLink="/app/dashboard">Mastermind</a>
+    <nav class="nav">
+      <a routerLink="/app/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/app/game" routerLinkActive="active">Jogar</a>
+      <a routerLink="/app/ranking" routerLinkActive="active">Ranking</a>
+    </nav>
+    <div class="right">
+      @if (auth.me()) {
+        <span class="me">
+          {{ auth.me()!.username }} · best {{ auth.me()!.best_score }}
+        </span>
+      }
+      <button class="btn ghost" (click)="onLogout()">Sair</button>
+    </div>
+  </header>
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
