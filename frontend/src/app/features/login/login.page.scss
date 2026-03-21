@@ -74,29 +74,28 @@ input {
   padding: 0.8rem;
   cursor: pointer;
   font-weight: 700;
-  color: #0b1020;
-  background: linear-gradient(90deg, #8c9cff, #00bfff);
+  display: inline-block;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
-
-  &.ghost {
-    display: inline-block;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-    text-decoration: none;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-  }
 }
 
 .footer {
   margin-top: 0.9rem;
-  display: flex;
-  justify-content: center;
+  display: block;
+  text-align: center;
+  .btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
