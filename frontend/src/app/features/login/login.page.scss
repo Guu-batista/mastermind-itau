@@ -1,0 +1,102 @@
+.wrap {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background:
+    radial-gradient(1000px 500px at 20% 10%, rgba(120, 90, 255, 0.35), transparent),
+    radial-gradient(900px 600px at 80% 60%, rgba(0, 190, 255, 0.22), transparent),
+    #0b1020;
+  color: #e9ecf5;
+}
+
+.card {
+  width: min(420px, 100%);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+h1 {
+  margin: 0 0 0.25rem;
+}
+
+.sub {
+  margin: 0 0 1rem;
+  color: #cfd6ff;
+}
+
+form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+
+  span {
+    font-weight: 600;
+    color: #cfd6ff;
+  }
+}
+
+input {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 16, 32, 0.6);
+  color: #ffffff;
+  padding: 0.7rem 0.8rem;
+  outline: none;
+
+  &:focus {
+    border-color: rgba(140, 156, 255, 0.7);
+    box-shadow: 0 0 0 3px rgba(140, 156, 255, 0.15);
+  }
+}
+
+.err {
+  color: #ffb4b4;
+}
+
+.alert {
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  background: rgba(255, 80, 80, 0.16);
+  border: 1px solid rgba(255, 80, 80, 0.25);
+}
+
+.btn {
+  border: 0;
+  border-radius: 0.9rem;
+  padding: 0.8rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #0b1020;
+  background: linear-gradient(90deg, #8c9cff, #00bfff);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.ghost {
+    display: inline-block;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    text-decoration: none;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+}
+
+.footer {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: center;
+}
