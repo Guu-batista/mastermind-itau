@@ -11,7 +11,7 @@ from app.repositories.game_repo import GameRepository
 
 class GameService:
     MAX_ATTEMPTS = 10
-    CODE_LENGTH = 7
+    CODE_LENGTH = 4
     ALPHABET = ["A", "B", "C", "D", "E", "F", "G"]
 
     MULTIPLIERS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]

@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 class StartGameResponse(BaseModel):
     game_code: str
     max_attempts: int = 10
-    code_length: int = 7
+    code_length: int = 4
     alphabet: list[str] = ["A", "B", "C", "D", "E", "F", "G"]
 
 class GuessRequest(BaseModel):
