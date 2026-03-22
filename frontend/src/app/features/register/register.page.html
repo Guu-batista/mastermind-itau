@@ -1,0 +1,48 @@
+<div class="wrap">
+  <div class="card">
+    <h1>Criar conta</h1>
+    <p class="sub">Crie um usuário para salvar histórico e pontuação.</p>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label>
+        <span>Usuário</span>
+        <input formControlName="username" placeholder="ex: guilherme" />
+        @if (form.controls.username.touched && form.controls.username.invalid) {
+          <small class="err">Mínimo 3 caracteres.</small>
+        }
+      </label>
+
+      <label>
+        <span>E-mail (opcional)</span>
+        <input formControlName="email" placeholder="ex: eu@exemplo.com" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <small class="err">E-mail inválido.</small>
+        }
+      </label>
+
+      <label>
+        <span>Senha</span>
+        <input type="password" formControlName="password" placeholder="mínimo 6 caracteres" />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <small class="err">Mínimo 6 caracteres.</small>
+        }
+      </label>
+
+      @if (error()) {
+        <div class="alert">{{ error() }}</div>
+      }
+
+      @if (success()) {
+        <div class="ok">{{ success() }}</div>
+      }
+
+      <button class="btn" type="submit" [disabled]="form.invalid || loading()">
+        {{ loading() ? 'Criando…' : 'Criar conta' }}
+      </button>
+    </form>
+
+    <div class="footer">
+      <a routerLink="/login">Voltar para login</a>
+    </div>
+  </div>
+</div>

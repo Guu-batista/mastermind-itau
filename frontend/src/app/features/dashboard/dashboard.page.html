@@ -1,0 +1,28 @@
+<section class="hero">
+  <h1>Dashboard</h1>
+  <p>
+    Inicie uma nova partida, acompanhe seu melhor score e veja o ranking.
+  </p>
+</section>
+
+<section class="grid">
+  <a class="tile" routerLink="/app/game">
+    <h2>Jogar!</h2>
+    <p>Você tem até 10 tentativas para acertar 4 posições.</p>
+  </a>
+
+  <a class="tile" routerLink="/app/ranking">
+    <h2>Ranking</h2>
+    <p>Veja os melhores jogadores!</p>
+  </a>
+
+  <div class="tile muted">
+    <h2>Seu perfil</h2>
+    @if (auth.me()) {
+      <p><strong>{{ auth.me()!.username }}</strong></p>
+      <p>Best score: <strong>{{ auth.me()!.best_score }}</strong></p>
+    } @else {
+      <p>Entre com sua conta para ver sua pontuação</p>
+    }
+  </div>
+</section>

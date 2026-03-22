@@ -1,0 +1,230 @@
+.head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  margin: 0 0 0.25rem;
+}
+
+p {
+  margin: 0;
+  color: #cfd6ff;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  .meta-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.9rem;
+    padding: 0.9rem 1rem;
+
+    &.highlight {
+      border-color: rgba(255, 98, 0, 0.4);
+      background: rgba(255, 98, 0, 0.08);
+
+      .meta-icon { color: #FF6200; }
+      .score { color: #FF8C42; font-size: 1.4rem; }
+    }
+
+    .meta-icon {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.3);
+
+      &.status-icon { color: #A0AABB; }
+      &.won { color: #4caf50; }
+      &.lost { color: #e53935; }
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.15rem;
+    }
+
+    .meta-value {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+  }
+}
+
+.board {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 90px 120px;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.6rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 700px) {
+  .row {
+    grid-template-columns: 1fr 70px;
+    grid-template-areas:
+      'cells feedback'
+      'cta cta';
+  }
+
+  .cells { grid-area: cells; }
+  .feedback { grid-area: feedback; }
+  .cta { grid-area: cta; }
+}
+
+.cells {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.cell {
+  width: 100%;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(10, 16, 32, 0.65);
+  color: #ffffff;
+  padding: 0.55rem 0.6rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.cell.correct {
+  border-color: rgba(90, 220, 140, 0.95);
+  box-shadow: 0 0 0 3px rgba(90, 220, 140, 0.15);
+}
+
+.feedback {
+  display: grid;
+  place-items: center;
+}
+
+.pill {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(140, 156, 255, 0.2);
+  border: 1px solid rgba(140, 156, 255, 0.35);
+  font-weight: 800;
+}
+
+.dash {
+  color: #95a0d8;
+}
+
+.cta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn {
+  border: 0;
+  border-radius: 0.85rem;
+  padding: 0.65rem 0.8rem;
+  cursor: pointer;
+  font-weight: 800;
+  color: #0b1020;
+  background: linear-gradient(90deg, #8c9cff, #00bfff);
+  min-width: 96px;
+}
+
+.btn.ghost {
+  background: #243B55;
+  color: #ffffff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.alert {
+  border-radius: 0.85rem;
+  padding: 0.7rem 0.8rem;
+  background: rgba(255, 80, 80, 0.16);
+  border: 1px solid rgba(255, 80, 80, 0.25);
+  margin-bottom: 0.75rem;
+}
+
+.empty {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.done {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(0, 190, 255, 0.12);
+  border: 1px solid rgba(0, 190, 255, 0.2);
+}
+
+.done h2 {
+  margin: 0 0 0.25rem;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 100;
+}
+
+.modal {
+  background: #0d1530;
+  border: 1px solid rgba(140, 156, 255, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal h2 {
+  margin: 0;
+}
+
+.modal-score {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(90deg, #8c9cff, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-label {
+  margin: 0 0 1rem;
+  color: #cfd6ff;
+}
