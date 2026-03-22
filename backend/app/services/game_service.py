@@ -1,18 +1,21 @@
 import json
 import random
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from app.models.game import Game
 from app.models.user import User
 from app.repositories.game_repo import GameRepository
-from datetime import datetime, timezone
+
 
 class GameService:
     MAX_ATTEMPTS = 10
-    CODE_LENGTH = 4
-    ALPHABET = ["A", "B", "C", "D"]
+    CODE_LENGTH = 7
+    ALPHABET = ["A", "B", "C", "D", "E", "F", "G"]
+
+    MULTIPLIERS = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+    WIN_BONUS   = [500, 500, 300, 300, 150, 150, 50, 50, 0, 0]
 
     def __init__(self) -> None:
         self.games = GameRepository()
@@ -45,13 +48,24 @@ class GameService:
         game.attempts_matrix = json.dumps(attempts, ensure_ascii=False)
 
     def _count_correct_positions(self, secret: str, guess: list[str]) -> int:
-        return sum(1 for i,
-                    ch in enumerate(guess)
-                    if secret[i] == ch)
+        return sum(1 for i, ch in enumerate(guess) if secret[i] == ch)
 
     def _correct_mask(self, secret: str, guess: list[str]) -> list[bool]:
-        return [secret[i] == guess[i]
-                 for i in range(self.CODE_LENGTH)]
+        return [secret[i] == guess[i] for i in range(self.CODE_LENGTH)]
+
+    def _compute_score(self, attempts: list[dict], status: str) -> int:
+        total = 0
+        for index, attempt in enumerate(attempts):
+            partial_hits = attempt["correct_positions"]
+            multiplier = self.MULTIPLIERS[index] if index < len(self.MULTIPLIERS) else 1
+            total += partial_hits * multiplier
+
+        if status == "WON":
+            win_index = len(attempts) - 1
+            bonus = self.WIN_BONUS[win_index] if win_index < len(self.WIN_BONUS) else 0
+            total += bonus
+
+        return total
 
     def submit_guess(self, db: Session, *, user_id: int, game_code: str, guess: list[str]) -> dict:
         game = self.games.get_by_code(db, game_code)
@@ -82,12 +96,14 @@ class GameService:
             game.status = "WON" if won else "LOST"
             game.finished_at = datetime.now(timezone.utc)
             game.duration_seconds = int((game.finished_at - game.created_at).total_seconds())
-            total_correct = sum(a["correct_positions"] for a in attempts)
-            game.score = total_correct * 50
 
+        game.score = self._compute_score(attempts, game.status)
+
+        if won or lost:
             user = db.execute(select(User).where(User.id == user_id)).scalars().first()
             if user and game.score > user.best_score:
                 user.best_score = game.score
+
         db.commit()
 
         remaining = self.MAX_ATTEMPTS - attempt_number
@@ -99,4 +115,3 @@ class GameService:
             "status": game.status,
             "score": game.score,
         }
-
