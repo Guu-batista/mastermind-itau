@@ -3,15 +3,15 @@ from pydantic import BaseModel, Field
 class StartGameResponse(BaseModel):
     game_code: str
     max_attempts: int = 10
-    code_length: int = 4
-    alphabet: list[str] = ["A", "B", "C", "D"]
+    code_length: int = 7
+    alphabet: list[str] = ["A", "B", "C", "D", "E", "F", "G"]
 
 class GuessRequest(BaseModel):
-    guess: list[str] = Field(min_length=4, max_length=4)
+    guess: list[str] = Field(min_length=1, max_length=7)
 
 class GuessResponse(BaseModel):
     correct_positions: int
-    correct_mask: list[bool] = Field(min_length=4, max_length=4)
+    correct_mask: list[bool] = Field(min_length=1, max_length=7)
     attempt_number: int
     remaining_attempts: int
     status: str
@@ -29,4 +29,3 @@ class GameSummaryResponse(BaseModel):
 class RankingRow(BaseModel):
     username: str
     best_score: int
-
