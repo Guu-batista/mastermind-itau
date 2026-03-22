@@ -1,6 +1,6 @@
 <div class="layout">
   <header class="topbar">
-    <a class="brand" routerLink="/app/dashboard">Mastermind</a>
+    <a class="brand" routerLink="/app/dashboard">Mastermind - Itaú</a>
     <nav class="nav">
       <a routerLink="/app/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/app/game" routerLinkActive="active">Jogar</a>
@@ -9,7 +9,7 @@
     <div class="right">
       @if (auth.me()) {
         <span class="me">
-          {{ auth.me()!.username }} · best {{ auth.me()!.best_score }}
+          Bem-vindo, {{ auth.me()!.username }}!
         </span>
       }
       <button class="btn ghost" (click)="onLogout()">Sair</button>

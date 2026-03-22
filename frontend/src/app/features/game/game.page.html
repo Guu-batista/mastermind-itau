@@ -29,9 +29,33 @@
   </div>
 } @else {
   <div class="meta">
-    <div><strong>Código:</strong> {{ gameCode() }}</div>
-    <div><strong>Status:</strong> {{ status() }}</div>
-    <div><strong>Score:</strong> {{ score() }}</div>
+    <div class="meta-card">
+      <span class="meta-icon">&#9632;</span>
+      <div>
+        <span class="meta-label">Código</span>
+        <span class="meta-value">{{ gameCode() }}</span>
+     </div>
+    </div>
+
+    <div class="meta-card">
+      <span class="meta-icon status-icon" [class.won]="status() === 'WON'" [class.lost]="status() === 'LOST'">
+        &#9679;
+      </span>
+      <div>
+        <span class="meta-label">Status</span>
+        <span class="meta-value">
+        {{ status() === 'IN_PROGRESS' ? 'Em andamento' : status() === 'WON' ? 'Vitória' : 'Derrota' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="meta-card highlight">
+      <span class="meta-icon">&#9733;</span>
+      <div>
+        <span class="meta-label">Pontuação</span>
+        <span class="meta-value score">{{ score() }}</span>
+      </div>
+    </div>
   </div>
 
   <div class="board">
@@ -62,7 +86,7 @@
         <div class="cta">
           @if ($index === currentIndex()) {
             <button
-              class="btn"
+              class="btn ghost"
               (click)="submit()"
               [disabled]="loading() || row.submitted || isFinished()"
             >
