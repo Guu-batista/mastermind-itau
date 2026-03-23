@@ -81,8 +81,15 @@ input {
   padding: 0.8rem;
   cursor: pointer;
   font-weight: 700;
-  color: #0b1020;
-  background: linear-gradient(90deg, #8c9cff, #00bfff);
+  display: inline-block;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
 
   &:disabled {
     opacity: 0.6;

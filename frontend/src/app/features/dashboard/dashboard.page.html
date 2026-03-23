@@ -20,7 +20,7 @@
     <h2>Seu perfil</h2>
     @if (auth.me()) {
       <p><strong>{{ auth.me()!.username }}</strong></p>
-      <p>Best score: <strong>{{ auth.me()!.best_score }}</strong></p>
+      <p>Melhor pontuação: <strong>{{ auth.me()!.best_score }}</strong></p>
     } @else {
       <p>Entre com sua conta para ver sua pontuação</p>
     }
