@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { vi, describe, it, expect, beforeEach } from 'vitest';
-
 import { RegisterPage } from './register.page';
 import { AuthService } from '../../core/auth/auth.service';
 
 describe('RegisterPage', () => {
   let fixture: ComponentFixture<RegisterPage>;
   let component: RegisterPage;
-  let authServiceMock: { register: ReturnType<typeof vi.fn> };
+  let authServiceMock: { register: jasmine.Spy };
   let router: Router;
 
   beforeEach(async () => {
-    authServiceMock = { register: vi.fn() };
+    authServiceMock = { register: jasmine.createSpy() };
 
     await TestBed.configureTestingModule({
       imports: [RegisterPage],
@@ -26,7 +24,7 @@ describe('RegisterPage', () => {
     fixture = TestBed.createComponent(RegisterPage);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true); // 👈 spy no router real
+    spyOn(router, 'navigateByUrl').and.returnValue(Promise.resolve(true));
     fixture.detectChanges();
   });
 
@@ -82,7 +80,7 @@ describe('RegisterPage', () => {
   describe('onSubmit with success', () => {
     beforeEach(() => {
       component.form.patchValue({ username: 'usuario', password: '123456', email: 'user@email.com' });
-      authServiceMock.register.mockReturnValue(of({}));
+      authServiceMock.register.and.returnValue(of({}));
     });
 
     it('should call auth.register with correct values', () => {
@@ -100,19 +98,17 @@ describe('RegisterPage', () => {
       expect(component.loading()).toBe(false);
     });
 
-    it('should redirect to /login after 800ms', async () => {
-      vi.useFakeTimers();
+    it('should redirect to /login after 800ms', fakeAsync(() => {
       component.onSubmit();
-      await vi.advanceTimersByTimeAsync(800);
+      tick(800);
       expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
-      vi.useRealTimers();
-    });
+    }));
 
     it('should send email as null when empty', () => {
       component.form.patchValue({ email: '' });
       component.onSubmit();
       expect(authServiceMock.register).toHaveBeenCalledWith(
-        expect.objectContaining({ email: null })
+        jasmine.objectContaining({ email: null })
       );
     });
   });
@@ -123,7 +119,7 @@ describe('RegisterPage', () => {
     });
 
     it('should set error message from API', () => {
-      authServiceMock.register.mockReturnValue(
+      authServiceMock.register.and.returnValue(
         throwError(() => ({ error: { detail: 'Usuário já existe.' } }))
       );
       component.onSubmit();
@@ -131,13 +127,13 @@ describe('RegisterPage', () => {
     });
 
     it('should set fallback error message when API has no detail', () => {
-      authServiceMock.register.mockReturnValue(throwError(() => ({})));
+      authServiceMock.register.and.returnValue(throwError(() => ({})));
       component.onSubmit();
       expect(component.error()).toBe('Não foi possível criar a conta.');
     });
 
     it('should stop loading on error', () => {
-      authServiceMock.register.mockReturnValue(throwError(() => ({})));
+      authServiceMock.register.and.returnValue(throwError(() => ({})));
       component.onSubmit();
       expect(component.loading()).toBe(false);
     });
