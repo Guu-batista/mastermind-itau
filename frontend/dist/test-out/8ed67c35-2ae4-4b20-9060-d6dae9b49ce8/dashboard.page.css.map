@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/features/dashboard/dashboard.page.scss"],
-  "sourcesContent": [".hero {\r\n  margin-bottom: 1rem;\r\n}\r\n\r\nh1 {\r\n  margin: 0 0 0.25rem;\r\n}\r\n\r\np {\r\n  margin: 0;\r\n  color: #cfd6ff;\r\n}\r\n\r\n.grid {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, minmax(0, 1fr));\r\n  gap: 1rem;\r\n}\r\n\r\n@media (max-width: 900px) {\r\n  .grid {\r\n    grid-template-columns: 1fr;\r\n  }\r\n}\r\n\r\n.tile {\r\n  display: block;\r\n  text-decoration: none;\r\n  color: inherit;\r\n  border-radius: 1rem;\r\n  padding: 1rem;\r\n  background: rgba(255, 255, 255, 0.06);\r\n  border: 1px solid rgba(255, 255, 255, 0.08);\r\n}\r\n\r\n.tile:hover {\r\n  border-color: rgba(140, 156, 255, 0.4);\r\n}\r\n\r\n.tile.muted {\r\n  background: rgba(255, 255, 255, 0.04);\r\n}\r\n\r\nh2 {\r\n  margin: 0 0 0.4rem;\r\n}"],
-  "mappings": ";AAAA,CAAA;AACE,iBAAA;;AAGF;AACE,UAAA,EAAA,EAAA;;AAGF;AACE,UAAA;AACA,SAAA;;AAGF,CAAA;AACE,WAAA;AACA,yBAAA,OAAA,CAAA,EAAA,OAAA,CAAA,EAAA;AACA,OAAA;;AAGF,QAAA,WAAA;AACE,GAPF;AAQI,2BAAA;;;AAIJ,CAAA;AACE,WAAA;AACA,mBAAA;AACA,SAAA;AACA,iBAAA;AACA,WAAA;AACA,cAAA,KAAA,GAAA,EAAA,GAAA,EAAA,GAAA,EAAA;AACA,UAAA,IAAA,MAAA,KAAA,GAAA,EAAA,GAAA,EAAA,GAAA,EAAA;;AAGF,CAVA,IAUA;AACE,gBAAA,KAAA,GAAA,EAAA,GAAA,EAAA,GAAA,EAAA;;AAGF,CAdA,IAcA,CAAA;AACE,cAAA,KAAA,GAAA,EAAA,GAAA,EAAA,GAAA,EAAA;;AAGF;AACE,UAAA,EAAA,EAAA;;",
-  "names": []
-}
