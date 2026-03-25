@@ -95,7 +95,10 @@ class GameService:
         if won or lost:
             game.status = "WON" if won else "LOST"
             game.finished_at = datetime.now(timezone.utc)
-            game.duration_seconds = int((game.finished_at - game.created_at).total_seconds())
+            created = game.created_at
+            if created.tzinfo is None:
+                created = created.replace(tzinfo=timezone.utc)
+            game.duration_seconds = int((game.finished_at - created).total_seconds())
 
         game.score = self._compute_score(attempts, game.status)
 
